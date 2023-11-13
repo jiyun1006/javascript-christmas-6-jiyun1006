@@ -35,7 +35,7 @@ export default class PlannerPrint {
     obj.outputFreeGift(eventList);
     obj.outputDiscountDetail(discountTotal, eventList);
     obj.outputTotalEventCost(discountTotal);
-    obj.outputExpectaion(discountTotal, totalCost);
+    obj.outputExpectationCost(discountTotal, totalCost);
     obj.outputBadge(discountTotal);
   }
 

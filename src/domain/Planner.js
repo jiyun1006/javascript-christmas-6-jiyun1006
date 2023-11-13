@@ -8,21 +8,41 @@ export default class Planner {
 
   // 1. 주문메뉴
   outputOrderMenu(menu) {
-    OutputView.printMenu(menu);
+    OutputView.printOrderMenuMessage();
+    menu.forEach((value, key) => {
+      OutputView.printOrderMenu(value, key);
+    });
+    OutputView.printNewLine();
   }
 
   // 할인 전 총주문 금액
   outputTotalCost(total) {
+    OutputView.printTotalCostMessage();
     OutputView.printTotalCost(total);
+    OutputView.printNewLine();
   }
 
   // 증정메뉴
   outputFreeGift(eventList) {
-    OutputView.printFreeGift(eventList.FreeGift);
+    OutputView.printFreeGiftMessage();
+    if (eventList.FreeGift) return OutputView.printFreeGift();
+    return OutputView.printNotFreeGift();
   }
 
   // 혜택 내역
   outputDiscountDetail(discountTotal, eventList) {
+    const [type, eventListValues] = this.#createVariable(eventList);
+    OutputView.printDiscountDetailMessage();
+    let cnt = 0;
+    eventListValues.forEach((value, key) => {
+      if (!value) cnt += 1;
+      if (value) OutputView.printDiscountDetail(type, discountTotal, key);
+    });
+    if (cnt === eventListValues.length) OutputView.printDiscountDetailNothing();
+    OutputView.printNewLine();
+  }
+
+  #createVariable(eventList) {
     const type = [
       uiConstants.DDAY_DISCOUNT,
       uiConstants.WEEKDAY_DISCOUNT,
@@ -30,13 +50,16 @@ export default class Planner {
       uiConstants.SPECIAL_DISCOUNT,
       uiConstants.FREE_GIFT_EVENT_DISCOUNT,
     ];
-    OutputView.printEventDetail(eventList, type, discountTotal);
+    const eventListValues = Object.values(eventList);
+    return [type, eventListValues];
   }
 
   // 총혜택금액
   outputTotalEventCost(discountTotal) {
+    OutputView.printTotalEventCostMessage();
     const sum = this.#sumDiscount(discountTotal);
-    OutputView.printTotalEventCost(sum);
+    if (sum === 0) return OutputView.printTotalEventCostNoting();
+    return OutputView.printTotalEventCost(sum);
   }
 
   #sumDiscount(discountTotal) {
@@ -44,13 +67,16 @@ export default class Planner {
   }
 
   // 할인후 예상 결제 금액
-  outputExpectaion(discountTotal, total) {
+  outputExpectationCost(discountTotal, total) {
+    OutputView.printExpectationCostMessage();
     const sum = this.#sumDiscount(discountTotal);
-    OutputView.printExpectCost(total - sum);
+    OutputView.printExpectationCost(total - sum);
+    OutputView.printNewLine();
   }
 
   // 12월 이벤트 배지
   outputBadge(discountTotal) {
+    OutputView.printBadgeMessage();
     const sum = this.#sumDiscount(discountTotal);
     OutputView.printBadge(this.#checkBadge(sum));
   }
