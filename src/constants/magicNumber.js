@@ -5,6 +5,8 @@ const magicNumber = {
   WEEK: 7,
   GIFT_COST: 120000,
   MIN_COST: 10000,
+  DDAY_DISCOUNT: 1000,
+  DISCOUNT_UNIT: 100,
 };
 
 export default magicNumber;

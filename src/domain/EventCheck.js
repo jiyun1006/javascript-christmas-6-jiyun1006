@@ -58,20 +58,4 @@ export default class EventCheck {
   #checkFreeGift(total) {
     return !!total >= magicNumber.GIFT_COST;
   }
-  // 할인 종류별로 구현한 메서드
-
-  // 1. 크리스마스 디데이 할인
-  #discountDday(date) {}
-
-  // 2. 평일할인(일~목) : 디저트메뉴 2023원 할인
-  #discountWeekDay(date) {}
-
-  // 3. 주말할인(금,토) : 메인메뉴 2023원 할인
-  #discountWeekEnd(date) {}
-
-  // 4. 특별할인 : 별 표시 있는 날짜에 1000원 할인
-  #discountSpecial(date) {}
-
-  // 증정 이벤트 (할인 전 금액 12만원 이상이면)
-  #giveFreegift() {}
 }
