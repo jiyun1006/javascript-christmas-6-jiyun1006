@@ -1,51 +1,39 @@
-import { magicNumber, foodCost } from '../constants/index.js';
-import { createFoodObj } from '../utils/index.js';
+import {
+  magicNumber,
+  foodCost,
+  food,
+  uiConstants,
+} from '../constants/index.js';
+import { createFoodObj, OutputView } from '../utils/index.js';
+import { Event } from './index.js';
 
+// 전체적인 이벤트를 출력해주는 플래너 클래스
 export default class Planner {
-  #menuObj;
+  #date;
 
-  #totalCost;
+  #menu;
 
-  constructor(menu) {
-    this.#menuObj = this.#createMenuObj(menu);
-    this.#totalCost = this.#createTotalCost(this.#menuObj);
+  constructor(date, menu) {
+    this.#date = Number(date);
+    this.#menu = menu;
   }
 
-  #createMenuObj(menuStr) {
-    const menuArr = menuStr.split(',');
-    const menuObj = new Map();
-    menuArr.forEach((menu) => {
-      const tmp = menu.split('-');
-      menuObj.set(tmp[0], Number(tmp[1]));
-    });
-    return menuObj;
+  preview() {
+    const event = new Event(this.#date, this.#menu);
+    const [ddayDC, weekDayDC, weekEndDC, specialDC] = event.discountTotal(
+      this.#date,
+    );
+    // console.log(
+    //   '디데이',
+    //   ddayDC,
+    //   '평일',
+    //   weekDayDC,
+    //   '주말',
+    //   weekEndDC,
+    //   '특별',
+    //   specialDC,
+    // );
+    event.printOrderMenu();
+    event.printTotal();
   }
-
-  #createTotalCost(menu) {
-    let totalCost = 0;
-    const foodObj = createFoodObj();
-    menu.forEach((value, key) => {
-      totalCost += foodCost[key] * value;
-    });
-    return totalCost;
-  }
-
-  // 할인 종류별로 구현한 메서드
-
-  // 1. 크리스마스 디데이 할인
-  #discountDday(date) {
-    return magicNumber.DDAY_DISCOUNT + magicNumber.DISCOUNT_UNIT * (date - 1);
-  }
-
-  // 2. 평일할인(일~목) : 디저트메뉴 2023원 할인
-  #discountWeekDay(date) {}
-
-  // 3. 주말할인(금,토) : 메인메뉴 2023원 할인
-  #discountWeekEnd(date) {}
-
-  // 4. 특별할인 : 별 표시 있는 날짜에 1000원 할인
-  #discountSpecial(date) {}
-
-  // 증정 이벤트 (할인 전 금액 12만원 이상이면)
-  #giveFreegift() {}
 }

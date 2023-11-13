@@ -9,6 +9,9 @@ const uiConstants = {
   PREVIEW_EVENT_MESSAGE: '일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!',
   DECEMBER: '12월 ',
   ORDER_MENU: '<주문 메뉴>',
+  COUNT: '개',
+  TOTAL_COST: '<할인 전 총주문 금액>',
+  MONEY_UNIT: '원',
 };
 
 export default uiConstants;

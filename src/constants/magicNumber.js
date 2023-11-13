@@ -7,6 +7,10 @@ const magicNumber = {
   MIN_COST: 10000,
   DDAY_DISCOUNT: 1000,
   DISCOUNT_UNIT: 100,
+  DESSERT_DISCOUNT: 2023,
+  MAIN_DISCOUNT: 2023,
+  SPECIAL_DISCOUNT: 1000,
+  FREE_GIFT: '샴페인',
 };
 
 export default magicNumber;
