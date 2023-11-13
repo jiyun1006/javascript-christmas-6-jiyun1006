@@ -32,5 +32,6 @@ module.exports = {
     'no-restricted-globals': 'off',
     'no-sparse-arrays': 'off',
     'default-case': 'off',
+    'prefer-const': 'off',
   },
 };

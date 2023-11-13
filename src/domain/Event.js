@@ -98,7 +98,7 @@ export default class Event {
 
   // 외부로 이용할 메서드
   discountTotal(date) {
-    let [ddayDC, weekDayDC, weekEndDC, specialDC, giftDC] = [0, 0, 0, 0, 25000];
+    let [ddayDC, weekDayDC, weekEndDC, specialDC, giftDC] = [0, 0, 0, 0, 0];
     if (this.#eventList.Dday) {
       ddayDC = this.#discountDday(date);
     }
@@ -110,6 +110,9 @@ export default class Event {
     }
     if (this.#eventList.Special) {
       specialDC = this.#discountSpecial();
+    }
+    if (this.#eventList.FreeGift) {
+      giftDC = magicNumber.CHAMPAGNE_COST;
     }
     return [ddayDC, weekDayDC, weekEndDC, specialDC, giftDC];
   }
@@ -146,18 +149,23 @@ export default class Event {
 
   // -------------------
   // 출력 메서드들 이용(외부 이용)
+
+  // 1. 주문메뉴
   printOrderMenu() {
     OutputView.printMenu(this.#menuObj);
   }
 
+  // 할인 전 총주문 금액
   printTotal() {
     OutputView.printTotalCost(this.#totalCost);
   }
 
+  // 증정메뉴
   printGift() {
     OutputView.printFreeGift(this.#eventList.FreeGift);
   }
 
+  // 혜택 내역
   printDiscountDetail(discountTotal) {
     const type = [
       uiConstants.DDAY_DISCOUNT,
@@ -169,6 +177,7 @@ export default class Event {
     OutputView.printEventDetail(this.#eventList, type, discountTotal);
   }
 
+  // 총혜택금액
   printEventCost(discountTotal) {
     const sum = this.#sumDiscount(discountTotal);
     OutputView.printTotalEventCost(sum);
@@ -178,13 +187,13 @@ export default class Event {
     return discountTotal.reduce((tmpSum, current) => tmpSum + current);
   }
 
+  // 할인후 예상 결제 금액
   printExpectaion(discountTotal) {
     const sum = this.#sumDiscount(discountTotal);
-    OutputView.printExpectCost(
-      this.#totalCost - sum + magicNumber.CHAMPAGNE_COST,
-    );
+    OutputView.printExpectCost(this.#totalCost - sum);
   }
 
+  // 12월 이벤트 배지
   printBadge(discountTotal) {
     const sum = this.#sumDiscount(discountTotal);
     OutputView.printBadge(this.#checkBadge(sum));

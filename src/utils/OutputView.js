@@ -38,7 +38,9 @@ const OutputView = {
   printEventDetail(eventList, type, discountTotal) {
     Console.print(uiConstants.EVENT_DETAIL);
     const eventListValues = Object.values(eventList);
+    let cnt = 0;
     eventListValues.forEach((value, idx) => {
+      if (!value) cnt += 1;
       if (value)
         Console.print(
           `${type[idx]}-${discountTotal[idx].toLocaleString()}${
@@ -46,18 +48,22 @@ const OutputView = {
           }`,
         );
     });
+    if (cnt === eventListValues.length) Console.print(uiConstants.NOTING);
     Console.print('\n');
   },
 
   printTotalEventCost(totalEventCost) {
     Console.print(uiConstants.TOTAL_EVENT_COST);
-    Console.print(
+    if (totalEventCost === 0) {
+      return Console.print(`0${uiConstants.MONEY_UNIT}`);
+    }
+    return Console.print(
       `-${totalEventCost.toLocaleString()}${uiConstants.MONEY_UNIT}`,
     );
-    Console.print('\n');
   },
 
   printExpectCost(expectationCost) {
+    Console.print('\n');
     Console.print(uiConstants.EXPECTATION_COST);
     Console.print(
       `${expectationCost.toLocaleString()}${uiConstants.MONEY_UNIT}`,
