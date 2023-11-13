@@ -20,23 +20,14 @@ export default class Planner {
 
   preview() {
     const event = new Event(this.#date, this.#menu);
-    const [ddayDC, weekDayDC, weekEndDC, specialDC] = event.discountTotal(
-      this.#date,
-    );
-    const discountTotal = [ddayDC, weekDayDC, weekEndDC, specialDC];
-    // console.log(
-    //   '디데이',
-    //   ddayDC,
-    //   '평일',
-    //   weekDayDC,
-    //   '주말',
-    //   weekEndDC,
-    //   '특별',
-    //   specialDC,
-    // );
+    const discountTotal = event.discountTotal(this.#date);
+
     event.printOrderMenu();
     event.printTotal();
     event.printGift();
     event.printDiscountDetail(discountTotal);
+    event.printEventCost(discountTotal);
+    event.printExpectaion(discountTotal);
+    event.printBadge(discountTotal);
   }
 }

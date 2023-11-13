@@ -30,9 +30,9 @@ const OutputView = {
     Console.print(uiConstants.FREE_GIFT_MENU);
     if (isGift)
       return Console.print(
-        `${uiConstants.FREE_GIFT} ${magicNumber.FREE_GIFT_CNT}${uiConstants.COUNT}`,
+        `${uiConstants.FREE_GIFT} ${magicNumber.FREE_GIFT_CNT}${uiConstants.COUNT}\n`,
       );
-    return Console.print(uiConstants.NOTING);
+    return Console.print(`${uiConstants.NOTING}\n`);
   },
 
   printEventDetail(eventList, type, discountTotal) {
@@ -47,6 +47,27 @@ const OutputView = {
         );
     });
     Console.print('\n');
+  },
+
+  printTotalEventCost(totalEventCost) {
+    Console.print(uiConstants.TOTAL_EVENT_COST);
+    Console.print(
+      `-${totalEventCost.toLocaleString()}${uiConstants.MONEY_UNIT}`,
+    );
+    Console.print('\n');
+  },
+
+  printExpectCost(expectationCost) {
+    Console.print(uiConstants.EXPECTATION_COST);
+    Console.print(
+      `${expectationCost.toLocaleString()}${uiConstants.MONEY_UNIT}`,
+    );
+    Console.print('\n');
+  },
+
+  printBadge(badge) {
+    Console.print(uiConstants.BADGE);
+    Console.print(badge);
   },
 
   printError() {

@@ -21,6 +21,12 @@ const uiConstants = {
   WEEKEND_DISCOUNT: '주말 할인: ',
   SPECIAL_DISCOUNT: '특별 할인: ',
   FREE_GIFT_EVENT_DISCOUNT: '증정 이벤트: ',
+  TOTAL_EVENT_COST: '<총혜택 금액>',
+  EXPECTATION_COST: '<할인 후 예상 결제 금액>',
+  BADGE: '<12월 이벤트 배지>',
+  STAR: '스타',
+  TREE: '트리',
+  SANTA: '산타',
 };
 
 export default uiConstants;

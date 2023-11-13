@@ -11,6 +11,10 @@ const magicNumber = {
   MAIN_DISCOUNT: 2023,
   SPECIAL_DISCOUNT: 1000,
   FREE_GIFT_CNT: 1,
+  CHAMPAGNE_COST: 25000,
+  STAR_COST: 5000,
+  TREE_COST: 10000,
+  SANTA_COST: 20000,
 };
 
 export default magicNumber;

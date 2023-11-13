@@ -98,7 +98,7 @@ export default class Event {
 
   // 외부로 이용할 메서드
   discountTotal(date) {
-    let [ddayDC, weekDayDC, weekEndDC, specialDC] = [0, 0, 0, 0];
+    let [ddayDC, weekDayDC, weekEndDC, specialDC, giftDC] = [0, 0, 0, 0, 25000];
     if (this.#eventList.Dday) {
       ddayDC = this.#discountDday(date);
     }
@@ -111,7 +111,7 @@ export default class Event {
     if (this.#eventList.Special) {
       specialDC = this.#discountSpecial();
     }
-    return [ddayDC, weekDayDC, weekEndDC, specialDC];
+    return [ddayDC, weekDayDC, weekEndDC, specialDC, giftDC];
   }
 
   // 1. 크리스마스 디데이 할인
@@ -124,7 +124,7 @@ export default class Event {
     let discountCost = 0;
     menu.forEach((value, key) => {
       if (food.DESSERT.includes(key))
-        discountCost += magicNumber.DESSERT_DISCOUNT;
+        discountCost += magicNumber.DESSERT_DISCOUNT * value;
     });
     return discountCost;
   }
@@ -133,7 +133,8 @@ export default class Event {
   #discountWeekEnd(menu) {
     let discountCost = 0;
     menu.forEach((value, key) => {
-      if (food.MAIN.includes(key)) discountCost += magicNumber.MAIN_DISCOUNT;
+      if (food.MAIN.includes(key))
+        discountCost += magicNumber.MAIN_DISCOUNT * value;
     });
     return discountCost;
   }
@@ -166,5 +167,33 @@ export default class Event {
       uiConstants.FREE_GIFT_EVENT_DISCOUNT,
     ];
     OutputView.printEventDetail(this.#eventList, type, discountTotal);
+  }
+
+  printEventCost(discountTotal) {
+    const sum = this.#sumDiscount(discountTotal);
+    OutputView.printTotalEventCost(sum);
+  }
+
+  #sumDiscount(discountTotal) {
+    return discountTotal.reduce((tmpSum, current) => tmpSum + current);
+  }
+
+  printExpectaion(discountTotal) {
+    const sum = this.#sumDiscount(discountTotal);
+    OutputView.printExpectCost(
+      this.#totalCost - sum + magicNumber.CHAMPAGNE_COST,
+    );
+  }
+
+  printBadge(discountTotal) {
+    const sum = this.#sumDiscount(discountTotal);
+    OutputView.printBadge(this.#checkBadge(sum));
+  }
+
+  #checkBadge(totalEventCost) {
+    if (totalEventCost >= magicNumber.SANTA_COST) return uiConstants.SANTA;
+    if (totalEventCost >= magicNumber.TREE) return uiConstants.TREE;
+    if (totalEventCost >= magicNumber.STAR) return uiConstants.STAR;
+    return uiConstants.NOTING;
   }
 }
