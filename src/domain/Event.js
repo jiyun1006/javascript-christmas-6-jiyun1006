@@ -5,7 +5,7 @@ import {
   magicNumber,
   uiConstants,
 } from '../constants/index.js';
-import { OutputView } from '../utils/index.js';
+import { OutputView, createMapObj, createTotalCost } from '../utils/index.js';
 
 // 혜택 확인하고 계산하는 클래스
 export default class Event {
@@ -13,36 +13,13 @@ export default class Event {
 
   #menuObj;
 
-  #totalCost;
-
   constructor(date, menu) {
-    this.#menuObj = this.#createMenuObj(menu);
-    this.#totalCost = this.#createTotalCost(this.#menuObj);
-
+    this.#menuObj = createMapObj(menu);
+    const totalCost = createTotalCost(this.#menuObj);
     this.#eventList = this.#fillBoolean(false);
-    if (this.#checkTotalAmount(this.#totalCost)) {
-      this.#eventList = this.#checkEvent(date, this.#totalCost);
+    if (this.#checkTotalAmount(totalCost)) {
+      this.#eventList = this.#checkEvent(date, totalCost);
     }
-  }
-
-  // 문자열인 주문목록을 Map 객체로 변환
-  #createMenuObj(menuStr) {
-    const menuArr = menuStr.split(',');
-    const menuObj = new Map();
-    menuArr.forEach((menu) => {
-      const tmp = menu.split('-');
-      menuObj.set(tmp[0], Number(tmp[1]));
-    });
-    return menuObj;
-  }
-
-  //  총 비용 계산
-  #createTotalCost(menu) {
-    let totalCost = 0;
-    menu.forEach((value, key) => {
-      totalCost += foodCost[key] * value;
-    });
-    return totalCost;
   }
 
   // -------------------
@@ -157,7 +134,8 @@ export default class Event {
 
   // 할인 전 총주문 금액
   printTotal() {
-    OutputView.printTotalCost(this.#totalCost);
+    const totalCost = createTotalCost(this.#menuObj);
+    OutputView.printTotalCost(totalCost);
   }
 
   // 증정메뉴
@@ -190,7 +168,9 @@ export default class Event {
   // 할인후 예상 결제 금액
   printExpectaion(discountTotal) {
     const sum = this.#sumDiscount(discountTotal);
-    OutputView.printExpectCost(this.#totalCost - sum);
+    const totalCost = createTotalCost(this.#menuObj);
+
+    OutputView.printExpectCost(totalCost - sum);
   }
 
   // 12월 이벤트 배지
