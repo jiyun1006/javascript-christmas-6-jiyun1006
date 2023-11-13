@@ -15,6 +15,7 @@ const magicNumber = {
   STAR_COST: 5000,
   TREE_COST: 10000,
   SANTA_COST: 20000,
+  EVENT_COUNT: 5,
 };
 
 export default magicNumber;

@@ -1,33 +1,64 @@
-import {
-  magicNumber,
-  foodCost,
-  food,
-  uiConstants,
-} from '../constants/index.js';
-import { createFoodObj, OutputView } from '../utils/index.js';
-import { Event } from './index.js';
+import { createTotalCost, OutputView } from '../utils/index.js';
+import { EventCheck } from './index.js';
+import { uiConstants, magicNumber } from '../constants/index.js';
 
-// 전체적인 이벤트를 출력해주는 플래너 클래스
 export default class Planner {
-  #date;
+  // -------------------
+  // 출력 메서드들 이용(외부 이용)
 
-  #menu;
-
-  constructor(date, menu) {
-    this.#date = Number(date);
-    this.#menu = menu;
+  // 1. 주문메뉴
+  outputOrderMenu(menu) {
+    OutputView.printMenu(menu);
   }
 
-  preview() {
-    const event = new Event(this.#date, this.#menu);
-    const discountTotal = event.discountTotal(this.#date);
+  // 할인 전 총주문 금액
+  outputTotalCost(total) {
+    OutputView.printTotalCost(total);
+  }
 
-    event.printOrderMenu();
-    event.printTotal();
-    event.printGift();
-    event.printDiscountDetail(discountTotal);
-    event.printEventCost(discountTotal);
-    event.printExpectaion(discountTotal);
-    event.printBadge(discountTotal);
+  // 증정메뉴
+  outputFreeGift(eventList) {
+    OutputView.printFreeGift(eventList.FreeGift);
+  }
+
+  // 혜택 내역
+  outputDiscountDetail(discountTotal, eventList) {
+    const type = [
+      uiConstants.DDAY_DISCOUNT,
+      uiConstants.WEEKDAY_DISCOUNT,
+      uiConstants.WEEKEND_DISCOUNT,
+      uiConstants.SPECIAL_DISCOUNT,
+      uiConstants.FREE_GIFT_EVENT_DISCOUNT,
+    ];
+    OutputView.printEventDetail(eventList, type, discountTotal);
+  }
+
+  // 총혜택금액
+  outputTotalEventCost(discountTotal) {
+    const sum = this.#sumDiscount(discountTotal);
+    OutputView.printTotalEventCost(sum);
+  }
+
+  #sumDiscount(discountTotal) {
+    return discountTotal.reduce((tmpSum, current) => tmpSum + current);
+  }
+
+  // 할인후 예상 결제 금액
+  outputExpectaion(discountTotal, total) {
+    const sum = this.#sumDiscount(discountTotal);
+    OutputView.printExpectCost(total - sum);
+  }
+
+  // 12월 이벤트 배지
+  outputBadge(discountTotal) {
+    const sum = this.#sumDiscount(discountTotal);
+    OutputView.printBadge(this.#checkBadge(sum));
+  }
+
+  #checkBadge(totalEventCost) {
+    if (totalEventCost >= magicNumber.SANTA_COST) return uiConstants.SANTA;
+    if (totalEventCost >= magicNumber.TREE) return uiConstants.TREE;
+    if (totalEventCost >= magicNumber.STAR) return uiConstants.STAR;
+    return uiConstants.NOTING;
   }
 }
