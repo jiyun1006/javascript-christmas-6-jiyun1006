@@ -7,8 +7,8 @@ import {
 } from '../constants/index.js';
 import { OutputView, createMapObj, createTotalCost } from '../utils/index.js';
 
-// 혜택 확인하고 계산하는 클래스
-export default class Event {
+// 혜택 확인하는 클래스
+export default class EventCheck {
   #eventList;
 
   #menuObj;
@@ -20,6 +20,11 @@ export default class Event {
     if (this.#checkTotalAmount(totalCost)) {
       this.#eventList = this.#checkEvent(date, totalCost);
     }
+  }
+
+  // getter 하나사용.......
+  get() {
+    return [this.#eventList, this.#menuObj];
   }
 
   // -------------------
@@ -75,28 +80,23 @@ export default class Event {
 
   // 외부로 이용할 메서드
   discountTotal(date) {
-    let [ddayDC, weekDayDC, weekEndDC, specialDC, giftDC] = [0, 0, 0, 0, 0];
-    if (this.#eventList.Dday) {
-      ddayDC = this.#discountDday(date);
-    }
-    if (this.#eventList.WeekDay) {
-      weekDayDC = this.#discountWeekDay(this.#menuObj);
-    }
-    if (this.#eventList.WeekEnd) {
-      weekEndDC = this.#discountWeekEnd(this.#menuObj);
-    }
-    if (this.#eventList.Special) {
-      specialDC = this.#discountSpecial();
-    }
-    if (this.#eventList.FreeGift) {
-      giftDC = magicNumber.CHAMPAGNE_COST;
-    }
+    let [ddayDC, weekDayDC, weekEndDC, specialDC, giftDC] = Array.from(
+      { length: 5 },
+      () => 0,
+    );
+    ddayDC = this.#discountDday(date);
+    weekDayDC = this.#discountWeekDay(this.#menuObj);
+    weekEndDC = this.#discountWeekEnd(this.#menuObj);
+    specialDC = this.#discountSpecial();
+    giftDC = this.#eventList.FreeGift ? magicNumber.CHAMPAGNE_COST : 0;
     return [ddayDC, weekDayDC, weekEndDC, specialDC, giftDC];
   }
 
   // 1. 크리스마스 디데이 할인
   #discountDday(date) {
-    return magicNumber.DDAY_DISCOUNT + magicNumber.DISCOUNT_UNIT * (date - 1);
+    return this.#eventList.Dday
+      ? magicNumber.DDAY_DISCOUNT + magicNumber.DISCOUNT_UNIT * (date - 1)
+      : 0;
   }
 
   // 2. 평일할인(일~목) : 디저트메뉴 2023원 할인
@@ -106,7 +106,7 @@ export default class Event {
       if (food.DESSERT.includes(key))
         discountCost += magicNumber.DESSERT_DISCOUNT * value;
     });
-    return discountCost;
+    return this.#eventList.WeekDay ? discountCost : 0;
   }
 
   // 3. 주말할인(금,토) : 메인메뉴 2023원 할인
@@ -116,12 +116,12 @@ export default class Event {
       if (food.MAIN.includes(key))
         discountCost += magicNumber.MAIN_DISCOUNT * value;
     });
-    return discountCost;
+    return this.#eventList.WeekEnd ? discountCost : 0;
   }
 
   // 4. 특별할인 : 별 표시 있는 날짜에 1000원 할인
   #discountSpecial() {
-    return magicNumber.SPECIAL_DISCOUNT;
+    return this.#eventList.Special ? magicNumber.SPECIAL_DISCOUNT : 0;
   }
 
   // -------------------
