@@ -23,6 +23,7 @@ export default class Planner {
     const [ddayDC, weekDayDC, weekEndDC, specialDC] = event.discountTotal(
       this.#date,
     );
+    const discountTotal = [ddayDC, weekDayDC, weekEndDC, specialDC];
     // console.log(
     //   '디데이',
     //   ddayDC,
@@ -35,5 +36,7 @@ export default class Planner {
     // );
     event.printOrderMenu();
     event.printTotal();
+    event.printGift();
+    event.printDiscountDetail(discountTotal);
   }
 }

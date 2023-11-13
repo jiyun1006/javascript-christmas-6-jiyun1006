@@ -1,4 +1,10 @@
-import { food, foodCost, specialDay, magicNumber } from '../constants/index.js';
+import {
+  food,
+  foodCost,
+  specialDay,
+  magicNumber,
+  uiConstants,
+} from '../constants/index.js';
 import { OutputView } from '../utils/index.js';
 
 // 혜택 확인하고 계산하는 클래스
@@ -17,7 +23,6 @@ export default class Event {
     if (this.#checkTotalAmount(this.#totalCost)) {
       this.#eventList = this.#checkEvent(date, this.#totalCost);
     }
-    // console.log(this.#eventList, '이벤트리스트');
   }
 
   // 문자열인 주문목록을 Map 객체로 변환
@@ -85,7 +90,7 @@ export default class Event {
   }
 
   #checkFreeGift(total) {
-    return !!total >= magicNumber.GIFT_COST;
+    return !!(total >= magicNumber.GIFT_COST);
   }
 
   // -------------------
@@ -146,5 +151,20 @@ export default class Event {
 
   printTotal() {
     OutputView.printTotalCost(this.#totalCost);
+  }
+
+  printGift() {
+    OutputView.printFreeGift(this.#eventList.FreeGift);
+  }
+
+  printDiscountDetail(discountTotal) {
+    const type = [
+      uiConstants.DDAY_DISCOUNT,
+      uiConstants.WEEKDAY_DISCOUNT,
+      uiConstants.WEEKEND_DISCOUNT,
+      uiConstants.SPECIAL_DISCOUNT,
+      uiConstants.FREE_GIFT_EVENT_DISCOUNT,
+    ];
+    OutputView.printEventDetail(this.#eventList, type, discountTotal);
   }
 }
