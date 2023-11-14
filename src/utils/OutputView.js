@@ -101,8 +101,9 @@ const OutputView = {
     Console.print(badge);
   },
 
-  printError() {
-    Console.print('ERROR');
+  // 에러 출력 메서드
+  printError(error) {
+    Console.print(error);
   },
 };
 

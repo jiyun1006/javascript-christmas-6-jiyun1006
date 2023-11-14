@@ -1,5 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 import { uiConstants } from '../constants/index.js';
+import { OutputView } from './index.js';
 
 const retry = {
   async createInput(type) {
@@ -7,9 +8,10 @@ const retry = {
 
     try {
       result = await this.createType(type);
+      Validate.isNumber(result);
     } catch (error) {
-      OutputView.printError();
-      result = await this.retry(type);
+      OutputView.printError(error.message);
+      result = await this.createInput(type);
     }
     return result;
   },
