@@ -1,5 +1,4 @@
-import { createTotalCost, OutputView } from '../utils/index.js';
-import { EventCheck } from './index.js';
+import { OutputView } from '../utils/index.js';
 import { uiConstants, magicNumber } from '../constants/index.js';
 
 export default class Planner {

@@ -1,10 +1,4 @@
-import {
-  magicNumber,
-  foodCost,
-  food,
-  uiConstants,
-} from '../constants/index.js';
-import { createFoodObj, OutputView, createTotalCost } from '../utils/index.js';
+import { createTotalCost } from '../utils/index.js';
 import { EventDiscount, EventCheck, Planner } from './index.js';
 
 // 전체적인 이벤트를 출력해주는 플래너 클래스

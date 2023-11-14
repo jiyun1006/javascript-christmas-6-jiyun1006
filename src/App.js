@@ -1,6 +1,5 @@
 import { InputView, OutputView } from './utils/index.js';
 import { PlannerPrint } from './domain/index.js';
-import { magicNumber, foodCost, food } from './constants/index.js';
 
 class App {
   async run() {

@@ -1,4 +1,4 @@
-import { MissionUtils, Console } from '@woowacourse/mission-utils';
+import { Console } from '@woowacourse/mission-utils';
 import { uiConstants } from '../constants/index.js';
 
 const retry = {

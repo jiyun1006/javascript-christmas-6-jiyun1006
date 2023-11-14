@@ -1,6 +1,5 @@
 import {
   food,
-  foodCost,
   specialDay,
   magicNumber,
   uiConstants,
