@@ -1,4 +1,4 @@
-import { OutputView } from '../utils/index.js';
+import { OutputView } from '../view/index.js';
 import { uiConstants, magicNumber } from '../constants/index.js';
 
 export default class Planner {

@@ -4,7 +4,8 @@ import {
   magicNumber,
   uiConstants,
 } from '../constants/index.js';
-import { OutputView, createMapObj, createTotalCost } from '../utils/index.js';
+import { createMapObj, createTotalCost } from '../utils/index.js';
+import { OutputView } from '../view/index.js';
 
 // 혜택 확인하는 클래스
 export default class EventCheck {
