@@ -1,17 +1,4 @@
-import { food, foodCost } from '../constants/index.js';
-
-export const createFoodObj = () => {
-  const foodKeys = Object.keys(food);
-  const foodObj = new Map();
-  foodKeys.forEach((foodType) => {
-    const foodValues = food[foodType];
-    foodObj.set(foodType, new Map());
-    foodValues.forEach((foodValue) => {
-      foodObj.get(foodType).set(foodValue, foodCost[foodValue]);
-    });
-  });
-  return foodObj;
-};
+import { foodCost } from '../constants/index.js';
 
 // 문자열인 주문목록을 Map 객체로 변환
 export const createMapObj = (menuStr) => {

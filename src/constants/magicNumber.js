@@ -18,6 +18,9 @@ const magicNumber = {
   EVENT_COUNT: 5,
   FIRST_DAY: 1,
   END_DAY: 31,
+  MENU_MAX_CNT: 20,
+  MENU_MIN_CNT: 1,
+  BEFORE: 0,
 };
 
 export default magicNumber;
