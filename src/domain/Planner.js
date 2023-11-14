@@ -33,9 +33,9 @@ export default class Planner {
     const [type, eventListValues] = this.#createVariable(eventList);
     OutputView.printDiscountDetailMessage();
     let cnt = 0;
-    eventListValues.forEach((value, key) => {
+    eventListValues.forEach((value, idx) => {
       if (!value) cnt += 1;
-      if (value) OutputView.printDiscountDetail(type, discountTotal, key);
+      if (value) OutputView.printDiscountDetail(type, discountTotal, idx);
     });
     if (cnt === eventListValues.length) OutputView.printDiscountDetailNothing();
     OutputView.printNewLine();
