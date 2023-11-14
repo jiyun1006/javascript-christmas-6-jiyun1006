@@ -1,11 +1,28 @@
-import { error, magicNumber } from './constants/index.js';
+import { error, magicNumber, uiConstants } from './constants/index.js';
 
 export default class Validate {
-  excute(obj) {
+  #date;
+
+  #menu;
+
+  constructor(obj, type) {
+    switch (type) {
+      case uiConstants.DATE:
+        this.#date = this.#dateValidate(obj);
+        break;
+      case uiConstants.MENU:
+        // this.#menu = this.#menuValidate(obj);
+        break;
+    }
+  }
+
+  #dateValidate(obj) {
     this.#isNumber(obj);
     this.#isEmpty(obj);
     this.#isInRange(obj);
   }
+
+  #menuValidate(obj) {}
 
   // 숫자인지 아닌지
   #isNumber(obj) {
