@@ -68,9 +68,21 @@ export default class Planner {
   // 할인후 예상 결제 금액
   outputExpectationCost(discountTotal, total) {
     OutputView.printExpectationCostMessage();
-    const sum = this.#sumDiscount(discountTotal);
+    const sum = this.#sumDiscountNotGift(discountTotal);
     OutputView.printExpectationCost(total - sum);
     OutputView.printNewLine();
+  }
+
+  #sumDiscountNotGift(discountTotal) {
+    const result = discountTotal.reduce((tmpSum, current, idx) => {
+      if (
+        idx === discountTotal.length - 1 &&
+        current === magicNumber.CHAMPAGNE_COST
+      )
+        return tmpSum + 0;
+      return tmpSum + current;
+    });
+    return result;
   }
 
   // 12월 이벤트 배지
