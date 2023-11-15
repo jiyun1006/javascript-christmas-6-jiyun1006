@@ -78,7 +78,7 @@ const OutputView = {
   },
 
   printTotalEventCostNoting() {
-    Console.print(`0${uiConstants.MONEY_UNIT}\n`);
+    Console.print(`${magicNumber.NOTHING}${uiConstants.MONEY_UNIT}\n`);
   },
 
   // 할인후 예상 금액 출력 메서드

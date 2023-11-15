@@ -32,7 +32,7 @@ export default class Planner {
   outputDiscountDetail(discountTotal, eventList) {
     const [type, eventListValues] = this.#createVariable(eventList);
     OutputView.printDiscountDetailMessage();
-    let cnt = 0;
+    let cnt = magicNumber.INITIAL_NUM;
     eventListValues.forEach((value, idx) => {
       if (!value) cnt += 1;
       if (value) OutputView.printDiscountDetail(type, discountTotal, idx);

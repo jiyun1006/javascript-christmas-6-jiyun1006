@@ -14,13 +14,15 @@ export default class EventDiscount {
   #checkAndDiscount(date, menuObj, eventList) {
     let [ddayDC, weekDayDC, weekEndDC, specialDC, giftDC] = Array.from(
       { length: magicNumber.EVENT_COUNT },
-      () => 0,
+      () => magicNumber.INITIAL_NUM,
     );
     ddayDC = this.#discountDday(date, eventList);
     weekDayDC = this.#discountWeekDay(menuObj, eventList);
     weekEndDC = this.#discountWeekEnd(menuObj, eventList);
     specialDC = this.#discountSpecial(eventList);
-    giftDC = eventList.FreeGift ? magicNumber.CHAMPAGNE_COST : 0;
+    giftDC = eventList.FreeGift
+      ? magicNumber.CHAMPAGNE_COST
+      : magicNumber.INITIAL_NUM;
     return [ddayDC, weekDayDC, weekEndDC, specialDC, giftDC];
   }
 
@@ -28,31 +30,33 @@ export default class EventDiscount {
   #discountDday(date, eventList) {
     return eventList.Dday
       ? magicNumber.DDAY_DISCOUNT + magicNumber.DISCOUNT_UNIT * (date - 1)
-      : 0;
+      : magicNumber.INITIAL_NUM;
   }
 
   // 2. 평일할인(일~목) : 디저트메뉴 2023원 할인
   #discountWeekDay(menu, eventList) {
-    let discountCost = 0;
+    let discountCost = magicNumber.INITIAL_NUM;
     menu.forEach((value, key) => {
       if (food.DESSERT.includes(key))
         discountCost += magicNumber.DESSERT_DISCOUNT * value;
     });
-    return eventList.WeekDay ? discountCost : 0;
+    return eventList.WeekDay ? discountCost : magicNumber.INITIAL_NUM;
   }
 
   // 3. 주말할인(금,토) : 메인메뉴 2023원 할인
   #discountWeekEnd(menu, eventList) {
-    let discountCost = 0;
+    let discountCost = magicNumber.INITIAL_NUM;
     menu.forEach((value, key) => {
       if (food.MAIN.includes(key))
         discountCost += magicNumber.MAIN_DISCOUNT * value;
     });
-    return eventList.WeekEnd ? discountCost : 0;
+    return eventList.WeekEnd ? discountCost : magicNumber.INITIAL_NUM;
   }
 
   // 4. 특별할인 : 별 표시 있는 날짜에 1000원 할인
   #discountSpecial(eventList) {
-    return eventList.Special ? magicNumber.SPECIAL_DISCOUNT : 0;
+    return eventList.Special
+      ? magicNumber.SPECIAL_DISCOUNT
+      : magicNumber.INITIAL_NUM;
   }
 }

@@ -21,6 +21,8 @@ const magicNumber = {
   MENU_MAX_CNT: 20,
   MENU_MIN_CNT: 1,
   BEFORE: 0,
+  NOTHING: 0,
+  INITIAL_NUM: 0,
 };
 
 export default magicNumber;
