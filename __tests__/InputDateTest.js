@@ -1,4 +1,3 @@
-import Validate from '../src/Validate.js';
 import { error, uiConstants } from '../src/constants/index.js';
 import { validateExcute } from '../src/utils/index.js';
 
